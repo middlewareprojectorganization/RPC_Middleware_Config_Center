@@ -5,7 +5,7 @@
       <img
         src="https://img.alicdn.com/tfs/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png"
         width="40" >
-      <span class="site-name">Vue</span>
+      <span class="site-name">中间件管控平台</span>
     </div>
     <el-menu
       :show-timeout="200"
@@ -109,7 +109,7 @@ export default {
     width: 100%;
   }
   .el-menu {
-    padding-top: 16px;
+    padding-top: 20px;
     width: 100% !important;
     border: none;
   }
@@ -119,12 +119,13 @@ export default {
     background-color: #000c17 !important;
     &:hover {
       color: #fff !important;
+      background-color: rgba(255,255,255,.1) !important;
     }
   }
   .el-menu-item,
   .el-submenu .el-menu-item {
     &.is-active {
-      background-color: #188fff !important;
+      background-color: #1880f0 !important;
       color: #fff !important;
     }
   }

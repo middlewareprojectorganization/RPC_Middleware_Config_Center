@@ -28,7 +28,7 @@
               class="user-avatar"
               src="https://img.alicdn.com/tfs/TB1ONhloamWBuNjy1XaXXXCbXXa-200-200.png"
             >
-            <span class="user-name">SUNXIHUI</span>
+            <span class="user-name">监控中心</span>
           </div>
           <el-dropdown-menu
             slot="dropdown"
@@ -56,7 +56,7 @@ export default {
   name: 'NavBar',
   methods: {
     logout() {
-      // console.log('Logout');
+        this.$router.push({path:'/'});
     },
   },
 };

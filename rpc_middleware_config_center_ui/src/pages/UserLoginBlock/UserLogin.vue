@@ -5,7 +5,7 @@
       <h2 class="slogan">
         欢迎使用 <br /> ICE 内容管理系统
       </h2>
-      <!-- <div class="form-container">
+      <div class="form-container">
         <h4 class="form-title">登录</h4>
         <el-form ref="form" :model="user" label-width="0">
           <div class="form-items">
@@ -52,13 +52,17 @@
             </a>
           </el-row>
         </el-form>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+
+
+
 import BasicContainer from '@vue-materials/basic-container';
+
 
 
 const backgroundImage =

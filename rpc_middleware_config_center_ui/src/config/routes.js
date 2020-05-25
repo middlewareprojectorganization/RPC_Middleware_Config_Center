@@ -1,8 +1,8 @@
-import HeaderAsideLayout from '@/layouts/HeaderAsideLayout';
-import NotFound from '@/pages/NotFound';
+import HeaderAsideLayout from '@/layouts/HeaderAsideLayout';   //首页
+import NotFound from '@/pages/NotFound'; //404
 import Dashboard from '@/pages/Dashboard';
 
-import UserLogin from '@/pages/UserLoginBlock';
+import UserLogin from '@/pages/UserLoginBlock'; //登陆
 
 
 
@@ -10,54 +10,45 @@ import UserLogin from '@/pages/UserLoginBlock';
 
 
 const routerConfig = [
-  {
-    path: '/form',
-    component: HeaderAsideLayout,
-    children: [
-      { path: '/form/basic', component: NotFound },
-      { path: '/form/signup', component: NotFound },
-    ],
-  },
-  {
-    path: '/charts',
-    component: HeaderAsideLayout,
-    children: [
-      { path: '/charts/line', component: NotFound },
-      { path: '/charts/histogram', component: NotFound },
-      { path: '/charts/bar', component: NotFound },
-    ],
-  },
-  {
-    path: '/profile',
-    component: HeaderAsideLayout,
-    children: [
-      { path: '/profile/success', component: NotFound },
-      { path: '/profile/fail', component: NotFound },
-    ],
-  },
-  {
-    path: '/result',
-    component: HeaderAsideLayout,
-    children: [
-      { path: '/result/success', component: NotFound },
-      { path: '/result/fail', component: NotFound },
-    ],
-  },
   { path: '*', component: NotFound },
-
-
-   // 登录页
+// 登录页
   {
     path: '/',
     component: UserLogin,
   },
-  //首页
+//首页
   {
     path: '/home',
     component: HeaderAsideLayout,
     children: [
       { path: '/table/basic', component: NotFound },
       { path: '/table/fixed', component: NotFound },
+    ],
+  },
+//侧边栏
+  {
+    path: '/obj-management',
+    component: HeaderAsideLayout,
+    children: [
+      { path: '/obj-management/machine-management', component: NotFound },
+      { path: '/obj-management/service-management', component: NotFound },
+      { path: '/obj-management/disposition-management', component: NotFound },
+    ],
+  },
+  {
+    path: '/contor-center',
+    component: HeaderAsideLayout,
+    children: [
+      { path: '/contor-center/link-monitoring', component: NotFound },
+      { path: '/contor-center/service-monitoring', component: NotFound },
+    ],
+  },
+  { 
+    path: '/rule-management',
+    component: HeaderAsideLayout,
+    children: [
+      { path: '/rule-management/flow-control-rule', component: NotFound },
+      { path: '/rule-management/demotion-rule', component: NotFound },
     ],
   },
 ];
