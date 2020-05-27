@@ -3,7 +3,7 @@
     <div class="user-login-bg" :style="{'background-image':`url(${backgroundImage})`}"></div>
     <div class="content-wrapper">
       <h2 class="slogan">
-        欢迎使用 <br /> ICE 内容管理系统
+        欢迎使用 <br /> 中间件管控平台
       </h2>
       <div class="form-container">
         <h4 class="form-title">登录</h4>

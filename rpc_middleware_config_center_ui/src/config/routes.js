@@ -3,10 +3,8 @@ import NotFound from '@/pages/NotFound'; //404
 import Dashboard from '@/pages/Dashboard';
 
 import UserLogin from '@/pages/UserLoginBlock'; //登陆
-
-
-
-
+import machineManagement from '@/pages/machineManagement';  
+import serviceManagement from '@/pages/serviceManagement';
 
 
 const routerConfig = [
@@ -15,6 +13,9 @@ const routerConfig = [
   {
     path: '/',
     component: UserLogin,
+    meta:{
+      title:'登录页'
+    }
   },
 //首页
   {
@@ -30,9 +31,10 @@ const routerConfig = [
     path: '/obj-management',
     component: HeaderAsideLayout,
     children: [
-      { path: '/obj-management/machine-management', component: NotFound },
-      { path: '/obj-management/service-management', component: NotFound },
+      { path: '/obj-management/machine-management', component: machineManagement },
+      { path: '/obj-management/service-management', component: serviceManagement },
       { path: '/obj-management/disposition-management', component: NotFound },
+      { path: '/obj-management/app-management', component: NotFound },
     ],
   },
   {

@@ -9,10 +9,13 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@alifd/next": "^1.20.6",
     "@vue-materials/basic-container": "^1.0.0",
     "element-ui": "^2.3.6",
+    "mockjs": "^1.1.0",
     "normalize.css": "^8.0.0",
     "vue": "^2.5.13",
+    "vue-axios": "^2.1.5",
     "vue-material": "^1.0.0-beta-13",
     "vue-router": "^3.0.1"
   },
@@ -31,6 +34,7 @@
     "@vue/cli-plugin-eslint": "^3.0.0",
     "@vue/cli-service": "^3.0.0",
     "@vue/eslint-config-airbnb": "^3.0.0",
+    "axios": "^0.19.2",
     "eslint-plugin-vue": "^4.5.0",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",

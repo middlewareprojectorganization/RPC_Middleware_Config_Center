@@ -6,6 +6,12 @@ import './styles/index.scss';
 import App from './App.vue';
 import router from './router';
 import Mock from 'mockjs' ;
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+Vue.use(VueAxios,axios);
+
+
+
 //登录页
 import VueMaterial from 'vue-material'
 import "vue-material/dist/vue-material.css";

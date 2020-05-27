@@ -22,6 +22,10 @@ const asideMenuConfig = [
         path: '/disposition-management',
         name: '配置管理',
       },
+      {
+        path: '/app-management',
+        name: 'App应用管理',
+      },
     ],
   },
 

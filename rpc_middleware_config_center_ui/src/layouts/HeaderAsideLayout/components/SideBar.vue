@@ -2,9 +2,8 @@
   <!-- 侧边导航 -->
   <scroll-bar>
     <div class="logo">
-      <img
-        src="https://img.alicdn.com/tfs/TB13UQpnYGYBuNjy0FoXXciBFXa-242-134.png"
-        width="40" >
+      <img 
+        src="@/assets/icons/logo.png" width="35" >
       <span class="site-name">中间件管控平台</span>
     </div>
     <el-menu

@@ -3,7 +3,7 @@
     <side-bar class="sidebar-container" />
     <div class="main-container">
       <nav-bar />
-      <app-main />
+      <app-main/>   
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
 <style lang="scss" scoped>
 .app-wrapper {
   position: relative;
+  background-color: #fff;
   height: 100%;
   width: 100%;
   &:after {
@@ -37,6 +38,6 @@ export default {
   min-height: 100vh;
   transition: margin-left 0.28s;
   margin-left: 256px;
-  background-color: #f0f2f5;
+  background-color: #fff;
 }
 </style>
