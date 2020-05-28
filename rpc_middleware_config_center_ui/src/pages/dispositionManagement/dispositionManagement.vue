@@ -1,12 +1,12 @@
 <template>
     <div>
         <!-- 表单组件 -->
-        <BasicTable></BasicTable>
+        <DTable></DTable>
     </div>
 </template>
 
 <script>
-  import BasicTable from '@/components/BasicTableBlock/BasicTable'
+  import DTable from '@/components/D2CrudIceBlockSimple/D2Crud'
     export default {
         data(){
             return{
@@ -14,8 +14,8 @@
             }
         },
         components: {
-            BasicTable
+            DTable
         },
     }
 
-</script>
+</script> 

@@ -5,6 +5,7 @@ import Dashboard from '@/pages/Dashboard';
 import UserLogin from '@/pages/UserLoginBlock'; //登陆
 import machineManagement from '@/pages/machineManagement';  
 import serviceManagement from '@/pages/serviceManagement';
+import dispositionManagement from '@/pages/dispositionManagement';
 
 
 const routerConfig = [
@@ -33,7 +34,7 @@ const routerConfig = [
     children: [
       { path: '/obj-management/machine-management', component: machineManagement },
       { path: '/obj-management/service-management', component: serviceManagement },
-      { path: '/obj-management/disposition-management', component: NotFound },
+      { path: '/obj-management/disposition-management', component: dispositionManagement },
       { path: '/obj-management/app-management', component: NotFound },
     ],
   },

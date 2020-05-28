@@ -1,12 +1,9 @@
 <template>
   <div className="basic-table">
     <basic-container id="top">  
-      
-
       <el-table
         :data="arr"
-        style="width: 90%; text-indent: 20px;"
-        :class="changeCss">
+        style="width: 90%; text-indent: 20px;">
         <el-table-column
           prop="id"
           label="序号"
@@ -42,7 +39,7 @@
       </el-table>
 
       <ul class="page-bar" >
-        <li v-if="cur>1"><a v-on:click="cur--,pageClick()">首页</a></li>
+        <li v-if="cur>1"><a v-on:click="cur--,firstpage()">首页</a></li>
         <li v-if="cur>1"><a v-on:click="cur--,pageClick()">上一页</a></li>
     
         <li v-if="cur==1"><a class="banclick">首页</a></li>
@@ -51,7 +48,7 @@
           <a v-on:click="btnClick(index)">{{ index }}</a>
         </li>
         <li v-if="cur!=pageSize"><a v-on:click="cur++,pageClick()">下一页</a></li>
-        <li v-if="cur!=pageSize"><a v-on:click="cur++,pageClick()">尾页</a></li>
+        <li v-if="cur!=pageSize"><a v-on:click="cur++,lastpage()">尾页</a></li>
         <li><a>共<i>{{pageSize}}</i>页</a></li>
       </ul>
     </basic-container>
@@ -68,6 +65,7 @@ import axios from 'axios';    //vue2.x的引入axios进行前后端交互
 
 export default {
   components: { BasicContainer },
+    inject: ['reload'], // 引入方法
   name: 'BasicTable',
    data () {
     return {
@@ -89,8 +87,19 @@ export default {
       console.log("总页数"+this.pageSize);
       //第一页
       this.arr = this.users.slice(0,10);
-    
+
+      if(this.timer){
+        clearIntervar(this.timer);
+      }else{
+        this.timer = setInterval(() => {
+          // this.reload() //刷新
+          console.log(12);
+        },3000);
+      }
     })
+  },
+  destroyed(){
+    clearIntervar(this.timer);
   },
   methods:{
     //分页数据
@@ -111,16 +120,18 @@ export default {
       //根据点击上下页请求数据
       this.dataListFn(this.cur.toString());
     },
+    firstpage(){
+      this.cur = 1;
+      this.dataListFn(this.cur.toString());
+    },
+    lastpage(){
+      this.cur = this.pageSize;
+      this.dataListFn(this.cur.toString());
+    },
 
     //btn
     release(index,row){         
-      for (let i=0;i<10;i++){
-        if (row === this.arr[i]){
-          // console.log(1);
-          this.changeCss = 'disClick';
-          console.log(this.changeCss);
-        }
-      }
+      
     },
     open(index,row){
 
@@ -206,16 +217,5 @@ export default {
     margin: 0px 4px;
     font-size: 12px;
   }
-
-.test{
-  background: green;
-}
-
- .disClick{
-  background: red!important;
- position: relative;
- z-index: 100;
- }
-
 </style>
  
