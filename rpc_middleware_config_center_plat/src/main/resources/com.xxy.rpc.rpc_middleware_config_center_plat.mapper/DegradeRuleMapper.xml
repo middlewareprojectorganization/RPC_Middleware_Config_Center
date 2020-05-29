@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxy.rpc.rpc_middleware_config_center_plat.mapper.DegradeRuleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xxy.rpc.rpc_middleware_config_center_plat.entity.DegradeRule">
+        <id column="id" property="id" />
+        <result column="app_id" property="appId" />
+        <result column="ip" property="ip" />
+        <result column="port" property="port" />
+        <result column="resource" property="resource" />
+        <result column="limit_app" property="limitApp" />
+        <result column="count" property="count" />
+        <result column="time_window" property="timeWindow" />
+        <result column="grade" property="grade" />
+        <result column="gmt_Create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+</mapper>

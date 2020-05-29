@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxy.rpc.rpc_middleware_config_center_plat.mapper.ConfigInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xxy.rpc.rpc_middleware_config_center_plat.entity.ConfigInfo">
+        <id column="id" property="id" />
+        <result column="config_id" property="configId" />
+        <result column="config_content" property="configContent" />
+        <result column="config_name" property="configName" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+</mapper>
