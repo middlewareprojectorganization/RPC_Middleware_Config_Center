@@ -1,30 +1,36 @@
 import HeaderAsideLayout from '@/layouts/HeaderAsideLayout';   //首页
 import NotFound from '@/pages/NotFound'; //404
 import Dashboard from '@/pages/Dashboard';
-
 import UserLogin from '@/pages/UserLoginBlock'; //登陆
 import machineManagement from '@/pages/machineManagement';  
 import serviceManagement from '@/pages/serviceManagement';
 import dispositionManagement from '@/pages/dispositionManagement';
-
+import Welcome from "@/pages/Welcome/welcome"
 
 const routerConfig = [
   { path: '*', component: NotFound },
 // 登录页
   {
-    path: '/',
+    path: '/login',
     component: UserLogin,
     meta:{
       title:'登录页'
-    }
+    },
+  },
+  {
+    path:'/',redirect:"/login"
   },
 //首页
   {
     path: '/home',
     component: HeaderAsideLayout,
     children: [
+      {
+        path:"/home",redirect:"/home/welcome"
+      },
       { path: '/table/basic', component: NotFound },
       { path: '/table/fixed', component: NotFound },
+      { path: "/home/welcome" ,component:Welcome}
     ],
   },
 //侧边栏
