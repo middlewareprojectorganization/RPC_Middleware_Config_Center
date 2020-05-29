@@ -1,6 +1,6 @@
 <template>
     <div>
-           欢迎
+           欢迎大家来到这里
     </div>
 </template>
 
