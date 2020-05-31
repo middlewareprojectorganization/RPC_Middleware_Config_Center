@@ -35,6 +35,8 @@ public interface CommonConstants {
 	 * 成功标记
 	 */
 	Integer SUCCESS = 200;
+
+
 	/**
 	 * 失败标记
 	 */
@@ -54,4 +56,6 @@ public interface CommonConstants {
 	 * size
 	 */
 	String SIZE = "size";
+
+	String SUCCESS_MSG  = "request successful";
 }

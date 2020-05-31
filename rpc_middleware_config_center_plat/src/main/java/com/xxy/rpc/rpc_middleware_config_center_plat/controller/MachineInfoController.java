@@ -1,23 +1,22 @@
 package com.xxy.rpc.rpc_middleware_config_center_plat.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xxy.rpc.rpc_middleware_config_center_plat.dto.MachineInfoDTO;
 import com.xxy.rpc.rpc_middleware_config_center_plat.entity.MachineInfo;
+import com.xxy.rpc.rpc_middleware_config_center_plat.request.MachinePageRequest;
 import com.xxy.rpc.rpc_middleware_config_center_plat.service.MachineInfoService;
 import com.xxy.rpc.rpc_middleware_config_center_plat.util.R;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -36,15 +35,29 @@ public class MachineInfoController {
 
     @GetMapping("/page")
     @ApiOperation("机器分页查询接口")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageSize", value = "每页大小", defaultValue = "1", required = true),
-            @ApiImplicitParam(name = "pageNum", value = "当前页", defaultValue = "20", required = true)
-    }
-    )
-    public R getMachineByPage(int pageSize, int pageNum, MachineInfoDTO machineInfo){
-        Page page = new Page(pageNum, pageSize);
+    @ApiResponses({
+            @ApiResponse(code = 200,message = "成功！", response = R.class ),
+            @ApiResponse(code = 500,message = "失败", response = R.class),
+    })
+    public R getMachineByPage(MachinePageRequest request){
+        Page page = new Page(request.getPageNum(), request.getPageSize());
         MachineInfo info = new MachineInfo();
-        BeanUtils.copyProperties(machineInfo, info);
+        BeanUtils.copyProperties(request.getDto(), info);
         return R.ok(machineInfoService.page(page, Wrappers.query(info)));
+    }
+
+    @DeleteMapping("/delete/{machineId}")
+    @ApiOperation("机器删除接口")
+    @ApiImplicitParam(name = "machineId", value = "机器id", required = true)
+    @ApiResponses({
+            @ApiResponse(code = 200,message = "成功！", response = R.class ),
+            @ApiResponse(code = 500,message = "失败", response = R.class),
+    })
+    public R removeMachine(@PathVariable("machineId") String machineId){
+        MachineInfoDTO dto = new MachineInfoDTO();
+        dto.setMachineId(machineId);
+        MachineInfo info = new MachineInfo();
+        BeanUtils.copyProperties(dto, info);
+        return R.ok(machineInfoService.remove(Wrappers.query(info)));
     }
 }

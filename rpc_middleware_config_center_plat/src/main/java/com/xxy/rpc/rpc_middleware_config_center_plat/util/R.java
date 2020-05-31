@@ -54,7 +54,7 @@ public class R<T> implements Serializable {
 	}
 
 	public static <T> R<T> ok(T data) {
-		return restResult(data, CommonConstants.SUCCESS, null);
+		return restResult(data, CommonConstants.SUCCESS, CommonConstants.SUCCESS_MSG);
 	}
 
 	public static <T> R<T> ok(T data, String msg) {
