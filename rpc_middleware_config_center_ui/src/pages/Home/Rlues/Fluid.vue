@@ -1,11 +1,14 @@
 <template>
     <div class="Fluid">
          <Crumbs :msg="msg" />
+        <appTable></appTable>
     </div>
 </template>
 
 <script>
 import Crumbs from "@/components/Crumbs/Crumbs"
+import appTable from '@/components/rule/controlRule/controlRule'
+
     export default {  
         data(){
             return{
@@ -16,6 +19,7 @@ import Crumbs from "@/components/Crumbs/Crumbs"
             }
         },
         components:{
+            appTable,
             Crumbs,
         }
     }

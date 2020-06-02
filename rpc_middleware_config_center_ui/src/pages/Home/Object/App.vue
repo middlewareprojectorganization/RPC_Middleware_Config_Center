@@ -1,11 +1,15 @@
 <template>
     <div class="App">
         <Crumbs :msg="msg"/>
+        <appTable></appTable>
+
     </div>
 </template>
 
 <script>
-import Crumbs from "@/components/Crumbs/Crumbs"
+import Crumbs from "@/components/Crumbs/Crumbs";
+import appTable from '@/components/object/appManagement/appManagement';
+
     export default {
       data(){
           return{
@@ -17,6 +21,7 @@ import Crumbs from "@/components/Crumbs/Crumbs"
       },
       components:{
           Crumbs,
+          appTable,
       }
     }
 </script>

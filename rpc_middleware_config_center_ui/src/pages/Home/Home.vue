@@ -121,6 +121,12 @@ export default {};
 
     .el-main {
     }
+
+    .el-menu-item:hover,
+    .el-menu-item:active,
+    .el-submenu__title:hover{
+      background-color: rgba(128,128,128,.5) !important;
+    }
   }
 }
 </style>

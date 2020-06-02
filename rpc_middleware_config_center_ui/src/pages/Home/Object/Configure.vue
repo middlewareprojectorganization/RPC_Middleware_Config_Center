@@ -1,11 +1,14 @@
 <template>
     <div class="Configure">
          <Crumbs :msg="msg" />
+         <DTable></DTable>
     </div>
 </template>
 
 <script>
 import Crumbs from "@/components/Crumbs/Crumbs"
+  import DTable from '@/components/object/D2CrudIceBlockSimple/D2Crud'
+
     export default {  
         data(){
             return{
@@ -17,6 +20,7 @@ import Crumbs from "@/components/Crumbs/Crumbs"
         },
         components:{
             Crumbs,
+            DTable,
         }
     }
 </script>

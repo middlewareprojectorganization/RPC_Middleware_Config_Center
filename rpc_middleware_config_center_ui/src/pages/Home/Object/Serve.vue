@@ -1,11 +1,14 @@
 <template>
     <div class="Serve">
          <Crumbs :msg="msg" />
+        <TabTable></TabTable>
     </div>
 </template>
 
 <script>
 import Crumbs from "@/components/Crumbs/Crumbs"
+  import TabTable from '@/components/object/TabTableBlock/TabTable'
+
     export default {  
         data(){
             return{
@@ -17,6 +20,8 @@ import Crumbs from "@/components/Crumbs/Crumbs"
         },
         components:{
             Crumbs,
+            TabTable
+
         }
     }
 </script>

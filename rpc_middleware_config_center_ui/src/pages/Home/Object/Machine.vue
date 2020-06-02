@@ -1,11 +1,15 @@
 <template>
     <div class="Machine">
         <Crumbs :msg="msg" />
+        <BasicTable></BasicTable>
+        
     </div>
 </template>
 
 <script>
 import Crumbs from "@/components/Crumbs/Crumbs"
+  import BasicTable from '@/components/object/BasicTableBlock/BasicTable'
+
     export default {  
         data(){
             return{
@@ -17,6 +21,8 @@ import Crumbs from "@/components/Crumbs/Crumbs"
         },
         components:{
             Crumbs,
+            BasicTable
+
         }
     }
 </script>

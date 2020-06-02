@@ -1,11 +1,14 @@
 <template>
     <div class="Lower">
          <Crumbs :msg="msg" />
+        <demoTable></demoTable>
     </div>
 </template>
 
 <script>
 import Crumbs from "@/components/Crumbs/Crumbs"
+import demoTable from '@/components/rule/demotionRule/demotionRule'
+
     export default {  
         data(){
             return{
@@ -17,6 +20,7 @@ import Crumbs from "@/components/Crumbs/Crumbs"
         },
         components:{
             Crumbs,
+            demoTable,
         }
     }
 </script>
