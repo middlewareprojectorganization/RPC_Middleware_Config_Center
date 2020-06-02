@@ -1,12 +1,23 @@
 <template>
     <div class="Fluid">
-        流控规则
+         <Crumbs :msg="msg" />
     </div>
 </template>
 
 <script>
-    export default {
-        
+import Crumbs from "@/components/Crumbs/Crumbs"
+    export default {  
+        data(){
+            return{
+               msg:{
+                   father:'规则管理',
+                   son:'流控规则'
+               }
+            }
+        },
+        components:{
+            Crumbs,
+        }
     }
 </script>
 

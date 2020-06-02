@@ -1,15 +1,25 @@
 <template>
     <div class="Lower">
-       降级规则
+         <Crumbs :msg="msg" />
     </div>
 </template>
 
 <script>
-    export default {
-        
+import Crumbs from "@/components/Crumbs/Crumbs"
+    export default {  
+        data(){
+            return{
+               msg:{
+                   father:'规则管理',
+                   son:'降级规则'
+               }
+            }
+        },
+        components:{
+            Crumbs,
+        }
     }
 </script>
-
 <style lang="stylus" scoped>
 .Lower{
     width 100%

@@ -1,12 +1,23 @@
 <template>
     <div class="Configure">
-         配置管理
+         <Crumbs :msg="msg" />
     </div>
 </template>
 
 <script>
-    export default {
-        
+import Crumbs from "@/components/Crumbs/Crumbs"
+    export default {  
+        data(){
+            return{
+               msg:{
+                   father:'对象管理',
+                   son:'配置管理'
+               }
+            }
+        },
+        components:{
+            Crumbs,
+        }
     }
 </script>
 

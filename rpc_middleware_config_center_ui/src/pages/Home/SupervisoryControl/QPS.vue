@@ -1,12 +1,23 @@
 <template>
     <div class="QPS">
-         服务QPS监控
+         <Crumbs :msg="msg" />
     </div>
 </template>
 
 <script>
-    export default {
-        
+import Crumbs from "@/components/Crumbs/Crumbs"
+    export default {  
+        data(){
+            return{
+               msg:{
+                   father:'控制中心',
+                   son:'服务qps监控'
+               }
+            }
+        },
+        components:{
+            Crumbs,
+        }
     }
 </script>
 

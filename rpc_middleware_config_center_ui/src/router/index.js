@@ -10,6 +10,7 @@ import QPS from "@/pages/Home/SupervisoryControl/QPS"
 import Link from "@/pages/Home/SupervisoryControl/Link"
 import Fluid from "@/pages/Home/Rlues/Fluid"
 import Lower from "@/pages/Home/Rlues/Lower"
+import Welcome from "@/pages/Home/Welcome/Welcome"
 Vue.use(Router)
 
 export default new Router({
@@ -37,6 +38,10 @@ export default new Router({
         path:'fluid',component:Fluid
       },{
         path:'lower',component:Lower
+      },{
+        path:'/home',redirect:'welcome'
+      },{
+        path:'welcome',component:Welcome
       }]
     }
   ]

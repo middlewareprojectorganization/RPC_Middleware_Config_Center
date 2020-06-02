@@ -9,7 +9,6 @@
       <el-container>
         <el-aside>
           <el-menu
-            default-active="2"
             class="el-menu-vertical-demo"
             background-color="rgb(38, 43, 47)"
             text-color="#fff"
@@ -22,10 +21,18 @@
                 <span>对象管理</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="/home/machine"><i class="el-icon-menu"></i>机器管理</el-menu-item>
-                <el-menu-item index="/home/serve"><i class="el-icon-menu"></i>服务管理</el-menu-item>
-                <el-menu-item index="/home/configure"><i class="el-icon-menu"></i>配置管理</el-menu-item>
-                <el-menu-item index="/home/app"><i class="el-icon-menu"></i>App应用管理</el-menu-item>
+                <el-menu-item index="/home/machine">
+                  <i class="el-icon-menu"></i>机器管理
+                </el-menu-item>
+                <el-menu-item index="/home/serve">
+                  <i class="el-icon-menu"></i>服务管理
+                </el-menu-item>
+                <el-menu-item index="/home/configure">
+                  <i class="el-icon-menu"></i>配置管理
+                </el-menu-item>
+                <el-menu-item index="/home/app">
+                  <i class="el-icon-menu"></i>App应用管理
+                </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="2">
@@ -34,8 +41,12 @@
                 <span>控制中心</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="/home/link"><i class="el-icon-menu"></i>调用链路监控</el-menu-item>
-                <el-menu-item index="/home/qps"><i class="el-icon-menu"></i>服务qps监控</el-menu-item>
+                <el-menu-item index="/home/link">
+                  <i class="el-icon-menu"></i>调用链路监控
+                </el-menu-item>
+                <el-menu-item index="/home/qps">
+                  <i class="el-icon-menu"></i>服务qps监控
+                </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="3">
@@ -44,8 +55,12 @@
                 <span>规则管理</span>
               </template>
               <el-menu-item-group>
-               <el-menu-item index="/home/fluid"><i class="el-icon-menu"></i>流控规则</el-menu-item>
-               <el-menu-item index="/home/lower"><i class="el-icon-menu"></i>降级规则</el-menu-item>
+                <el-menu-item index="/home/fluid">
+                  <i class="el-icon-menu"></i>流控规则
+                </el-menu-item>
+                <el-menu-item index="/home/lower">
+                  <i class="el-icon-menu"></i>降级规则
+                </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
           </el-menu>
@@ -76,6 +91,7 @@ export default {};
     .el-header {
       width: 100%;
       padding: 0;
+      border-bottom: 1px solid #999;
 
       .log {
         width: 300px;
@@ -83,6 +99,7 @@ export default {};
         padding-left: 50px;
         background: url('../../assets/ho.png') no-repeat 40px 12px;
         background-color: rgb(38, 43, 47);
+        border-bottom: 1px solid rgb(38, 43, 47);
 
         h1 {
           text-align: center;
@@ -95,9 +112,10 @@ export default {};
     .el-aside {
       width: 300px !important;
       background-color: rgb(38, 43, 47);
-      .el-menu-vertical-demo{
-          border none
-          border-radius none
+
+      .el-menu-vertical-demo {
+        border: none;
+        border-radius: none;
       }
     }
 
