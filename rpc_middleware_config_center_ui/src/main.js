@@ -1,29 +1,25 @@
-import Vue from 'vue';
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import Vue from 'vue'
+import App from './App'
+import router from './router'
+import axios from "axios"
 import ElementUI from 'element-ui';
+import { Form, FormItem ,Input,Message} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import 'normalize.css/normalize.css';
-import './styles/index.scss';
-import App from './App.vue';
-import router from './router';
-import Mock from 'mockjs' ;
-import axios from 'axios';
-import VueAxios from 'vue-axios';
-Vue.use(VueAxios,axios);
+Vue.prototype.$http = axios
+Vue.prototype.$Message=Message
+Vue.prototype.$http=axios
+Vue.use(ElementUI)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Input)
+Vue.config.productionTip = false
 
-
-
-//登录页
-import VueMaterial from 'vue-material'
-import "vue-material/dist/vue-material.css";
-import 'vue-material/dist/theme/default.css'
-Vue.use(VueMaterial)
-
-
-Vue.use(ElementUI);
-
-Vue.config.productionTip = false;
-
+/* eslint-disable no-new */
 new Vue({
+  el: '#app',
   router,
-  render: h => h(App),
-}).$mount('#app');
+  components: { App },
+  template: '<App/>'
+})
