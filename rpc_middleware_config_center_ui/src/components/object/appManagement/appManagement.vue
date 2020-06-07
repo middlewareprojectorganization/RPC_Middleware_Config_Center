@@ -9,7 +9,7 @@
       @custom-emit-3="detail"/>
       <children :child="child" ref='c1'></children>
       <detail :child2="child2" ref='c2'></detail>
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -24,6 +24,7 @@ export default {
   },
   data () {
     return {
+      btnstate: false,  //是否选择了配置
       child: false,  //配置子组件状态
       child2: false,  //详情查看子组件状态
       columns: [
@@ -83,12 +84,23 @@ export default {
 
       if(status == 'true'){
         //已经绑定状态
-        alert('请先解绑');
+        this.$message({
+          message: '请先解绑',
+          type: 'warning'
+        });
+
         this.child = false;
       }else{
         this.child = true;
         // alert('可');
-        this.$refs.c1.show(true);
+
+        this.$refs.c1.show(true); 
+
+        if(!this.btnstate){
+          return
+        }
+
+        //当然要确定才能为true
         this.data[index].status = "true";
       }
 
@@ -98,12 +110,19 @@ export default {
       console.log(status);
       if(status == 'true'){
         this.data[index].status = "false";
-        alert('成功取消绑定');
+        this.$message({
+          message: '成功取消绑定',
+          type: 'success'
+        });
       }else{
-        alert('暂无绑定任何配置');
+        this.$message.error('暂无绑定任何配置');
       }
     },
     detail({index,row}){
+      if(this.data[index].status === 'false'){
+        this.$message.error('暂无任何配置详情,请先绑定');
+        return 
+      }
       this.$refs.c2.show(true);
     },
   }

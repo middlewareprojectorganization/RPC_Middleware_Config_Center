@@ -224,7 +224,7 @@ export default {
 <style scoped>
   .add{
     margin:2% 0 0 70% !important;
-    background-color: rgb(188,188,188) !important;
+    background-color: #add8ee !important;
   }
 
   .el-table tr:nth-child(){

@@ -2,6 +2,7 @@
   <div :style="style.editDialog">
     <el-button @click="handleColumnClick(row)" type="primary" size="mini" round v-if="key === 'action'">编辑</el-button>
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
+      
       <el-form :model="formRow" :rules="rules" ref="ruleForm">
         <el-form-item label="标题" :label-width="formLabelWidth" prop="title">
           <el-input v-model="formRow.title"></el-input>
@@ -37,7 +38,7 @@ export default {
       dialogFormVisible: false,
       rules: {
         title: [
-          { required: true, message: '必填选项', trigger: 'blur' },
+          { required: true, message: '请输入用户名', trigger: 'blur' },
         ],
         author: [
           { required: true, message: '必填选项', trigger: 'blur' }
@@ -49,12 +50,15 @@ export default {
           { required: true, message: '必填选项', trigger: 'blur' }
         ],
       },
+      //添加表单
+      formRow:{},
       formLabelWidth: '80px',
     };
   },
   computed: {
+    //添加用户的表单数据
     formRow() {
-      return Object.assign({}, this.row);
+      // return Object.assign({}, this.row);
     },
   },
   props: {

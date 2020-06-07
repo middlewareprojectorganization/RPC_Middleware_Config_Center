@@ -186,11 +186,8 @@ export default {
 
 <style>
   .tab-table {
-    margin-left: 30px;
+    margin:0px 0 0 50px !important;
   }
- .el-tabs__content{
-  margin-left: -75px;
- }
 </style>
 
 

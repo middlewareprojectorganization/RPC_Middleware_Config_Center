@@ -3,12 +3,12 @@
  <el-dialog title="绑定配置" :visible.sync="dialogFormViseble" @close="closeDialog">
  
  <div v-for="item in sum" class="box">
-    <input type="radio" :id="item.order" :value="item.value" v-model="disposition" name="radio">
+    <input type="radio" :id="item.order" :value="item.value" v-model="disposition" name="radio" @click="addbtn(item.value)">
     <label :for="item.order">{{item.value}}</label>
   </div>
    <div slot="footer" class="dialog-footer">
-     <el-button @click="dialogFormViseble = false">取 消</el-button>
-     <el-button type="primary" @click="dialogFormViseble = false">确 定</el-button>
+     <el-button @click="dialogFormViseble = false" >取 消</el-button>
+     <el-button type="primary" @click="sure" >确 定</el-button>
    </div>
  </el-dialog>
 </div>
@@ -38,11 +38,27 @@
    methods: {
     show(dialogFormViseble){
       this.dialogFormViseble = true;
+      // return 
     },
     closeDialog() {
       this.$emit('CB_dialogStatus')
+
+     },
+     addbtn(index){   
+      console.log(index);
+      
+     },
+     fail(){
+
+     },
+     sure(){
+      // this.btnstate=true;
+      // console.log(btnstate)
+      // $emit('')
+      this.dialogFormViseble = false;
      },
    },
+
   /* watch:{
      dialogStatus(newLv,oldLv){
          this.dialogFormViseble=newLv

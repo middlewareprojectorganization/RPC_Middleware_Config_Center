@@ -37,6 +37,24 @@
         "author": "化辰",
         "status": "已发布",
         "date": "2017-03-16"
+      },
+      {
+        "title": "LevelDB 实现分析",
+        "author": "胡帅",
+        "status": "已发布",
+        "date": "2017-07-05"
+      },
+      {
+        "title": "Git Diff 解析器",
+        "author": "栖邀",
+        "status": "已发布",
+        "date": "2017-05-18"
+      },
+      {
+        "title": "函数式编程",
+        "author": "化辰",
+        "status": "已发布",
+        "date": "2017-03-16"
       }
     ],
     "inreview": [
