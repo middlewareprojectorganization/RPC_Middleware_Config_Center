@@ -12,8 +12,8 @@ export default Mock.mock('/api/users', options => {
   let data={}
   data[pageSize]=[{
         'name': '@cname',
-        'id|+1': 1,
-        'age|10-60': 0,    //10-60以内的随机数，0用来确定类型
+        // 'id|+1': 1,
+        'age|0000-9999': 0,    //10-60以内的随机数，0用来确定类型
         'birthday': '@date("yyyy-MM-dd")',    //年月日
         'city': '@city(true)',    //中国城市
         // 'state':true,
@@ -21,7 +21,7 @@ export default Mock.mock('/api/users', options => {
       }]
       data.pagenum=pagenum
       data.total=total
-  console.log(data,'data')
+  // console.log(data,'data')
   
 
   let demo=Mock.mock({
@@ -42,5 +42,3 @@ export default Mock.mock('/api/users', options => {
   }
   return demo
 })
-
-

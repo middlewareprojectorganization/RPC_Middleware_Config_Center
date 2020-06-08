@@ -1,290 +1,274 @@
 <template>
-  <div>
-    <d2-crud
-    ref="d2Crud"
-    :columns="columns"
-    :data="data"
-    add-title="我的新增"
-    :add-template="addTemplate"
-    :form-options="formOptions"
-    :rowHandle="rowHandle"
-    @row-remove="handleRowRemove"
-    @dialog-open="handleDialogOpen"
-    @row-add="handleRowAdd"
-    @dialog-cancel="handleDialogCancel">
-      <el-button slot="header" class="add" @click="addRow">添加</el-button>
-      <!-- <el-button slot="header" style="margin-bottom: 5px" @click="addRowWithNewTemplate">使用自定义模板新增</el-button> -->
-      <el-button slot="header"><i class="el-icon-search"></i> 搜索</el-button>
-    </d2-crud>
+  <div class="main">
 
- <!--    <el-pagination @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-size="queryInfo.pagesize" layout="total, prev, pager, next, jumper" :total="total">  -->
+    <el-card>
+        <el-row :gutter="20">
+          <el-col :span="7">
+            <el-button @click="delArray()" type="danger">删除所选</el-button>
+            </el-input>
+          </el-col>
+        </el-row>
 
-  <ul class="page-bar" >
-      <li v-if="cur>1"><a v-on:click="cur--,firstpage()">首页</a></li>
-      <li v-if="cur>1"><a v-on:click="cur--,pageClick()">上一页</a></li>
+    <el-table
+      ref="multipleTable"
+      :data="configlist"
+      tooltip-effect="dark"
+      style="width: 100%"
+      @selection-change="handleSelectionChange">
+      <el-table-column
+        type="selection"
+        width="80">
+      </el-table-column>
+      <el-table-column
+        label="配置ID"
+        prop="age"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="名称"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="isMale"
+        label="是否绑定"
+        show-overflow-tooltip
+        width="200">
+          <template slot-scope="scope">{{ scope.row.date }}
+            <el-switch
+              v-model="scope.row.isMale"
+              disabled>
+            </el-switch>
+          </template>
+      </el-table-column>
+      <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button size="mini" type="primary" @click="detail(scope.row)">详情</el-button>
+              <el-button size="mini" type="warning" @click="edit(scope.row)">修改</el-button>
+              <el-button size="mini" type="danger" @click="del(scope.row.age)">删除</el-button>
+            </template>
+          </el-table-column>
+    </el-table>
+    
+    <el-pagination @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-size="queryInfo.pagesize" layout="total, prev, pager, next, jumper" :total="total"> 
+    </el-pagination>
+  </el-card>
   
-      <li v-if="cur==1"><a class="banclick">首页</a></li>
-      <li v-if="cur==1"><a class="banclick">上一页</a></li>
-      <li v-for="index in indexs" v-bind:class="{ 'active': cur == index}">
-        <a v-on:click="btnClick(index)">{{ index }}</a>
-      </li>
-      <li v-if="cur!=pageSize"><a v-on:click="cur++,pageClick()">下一页</a></li>
-      <li v-if="cur!=pageSize"><a v-on:click="cur++,lastpage()">尾页</a></li>
-      <li><a>共<i>{{pageSize}}</i>页</a></li>
-    </ul>
-    </div>
+  <!-- 修改记录对话框 -->
+  <el-dialog
+  title="修改配置"
+  :visible.sync="editDialogVisible"
+  width="30%">
+
+  <el-form :model="editForm" :rules="editFormRules" ref="editForm" label-width="100px">
+    <el-form-item label="配置ID" prop="editid">
+      <el-input v-model.number="editForm.editid"></el-input>
+    </el-form-item>
+    <el-form-item label="名称" prop="editname">
+      <el-input v-model="editForm.editname"></el-input>
+    </el-form-item>
+  </el-form>
+
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="editDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="editParams('editForm')">确 定</el-button>
+  </span>
+</el-dialog>
+
+<!-- 查看详情 -->
+  <el-dialog
+  title="配置详情"
+  :visible.sync="configDialogVisible"
+  width="30%">
+
+  <h3>配置ID</h3>
+  <p class="detai">{{ configId }}</p><br>
+  <h3>应用名称</h3>
+  <p class="detai">{{ appName }}</p>
+</el-dialog>
+</div>
 </template>
 
 <script>
-import Vue from 'vue'
-import D2Crud from '@d2-projects/d2-crud'
+  import Mock from 'mockjs'
+require('../../../../mock/index.js')
+import axios from 'axios';  
+import { isInteger } from '../../validator.js';
 
-Vue.use(D2Crud)
-
-export default {
-  data() {
-    return {
-      users: [],
-      len: 1,
-      pageSize:1, //总长度
-      cur: 1,  //当前页码
-      arr:[],
-      columns: [
-        {
-          title: '日期',
-          key: 'date',
-          width: '180'
+  export default {
+    data() {
+      return {
+        multipleSelection: [],
+        queryInfo:{
+          query:'',    //要搜索的关键字
+          pagenum:1,    //页码
+          pagesize:20,   //一页的数量
         },
-        {
-          title: '姓名',
-          key: 'name',
-          width: '180'
+        configlist:[],  
+        total:0,  //总页数
+        editDialogVisible: false,    //显示隐藏修改对话框
+        configDialogVisible: false,
+        editForm:{        //修改表单的数据对象
+          editid: '',
+          editname:''
+        },   
+        editFormRules:{    //修改表单的验证规则
+          editid: [
+            { required: true, type:'number', message: "请输入正确的配置id", trigger: "blur" },
+            { validator: isInteger, trigger: "blur" }
+          ],
+          editname: [
+            { required: true, message: "请输入应用名称", trigger: "blur" },
+            { min: 2, max: 15, message: "长度在 2 到 15 个字符", trigger: "blur" }
+          ],
         },
-        {
-          title: '地址',
-          key: 'address'
-        }
-      ],
-      data: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          forbidRemove: false,
-          showRemoveButton: true
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-          forbidRemove: false,
-          showRemoveButton: true
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-          forbidRemove: false,
-          showRemoveButton: true
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-          forbidRemove: false,
-          showRemoveButton: true
-        }
-      ],
-      addTemplate: {
-        date: {
-          title: '日期',
-          value: '2016-05-05'
-        },
-        name: {
-          title: '姓名',
-          value: '王小虎'
-        },
-        address: {
-          title: '地址',
-          value: '上海市普陀区金沙江路 1520 弄'
-        }
-      },
-      formOptions: {
-        labelWidth: '80px',
-        labelPosition: 'left',
-        saveLoading: false
-      },
-
-      rowHandle: {
-        remove: {
-          icon: 'el-icon-delete',
-          size: 'small',
-          fixed: 'right',
-          confirm: true,
-          show (index, row) {
-            if (row.showRemoveButton) {
-              return true
-            }
-            return false
-          },
-          disabled (index, row) {
-            if (row.forbidRemove) {
-              return true
-            }
-            return false
-          }
-        },
+        //详情查看
+        configId:'',    //详情查看的配置id
+        appName:'',   //详情查看的应用名称
       }
-    }
-  },
-  methods: {
-    //删除btn
-    handleRowRemove ({ index, row }, done) {
-      setTimeout(() => {
-        console.log(index)
-        console.log(row)
-        this.$message({
-          message: '删除成功',
-          type: 'success'
+    },
+    created(){
+      this.getUsersList();
+    },
+    methods: {
+      async getUsersList(type){
+        if(type) this.queryInfo.pagenum=1
+        const data=Object.assign({},this.queryInfo)
+        axios.get('/api/users',{data}).then(res=>{
+          console.log(res.data.status);
+          this.configlist = res.data.data.user;
+          this.total = res.data.data.total;
+          console.log(this.configlist)
         })
-        done()
-      }, 300)
+      },
+       //监听页码值改变
+    handleCurrentChange(newPage){
+      console.log(newPage); 
+      this.queryInfo.pagenum = newPage;
+      this.getUsersList();
     },
-    handleDialogOpen ({ mode }) {
-      /*this.$message({
-        message: '打开模态框，模式为：' + mode,
-        type: 'success'
-      })*/
-    },
-    // 普通的新增
-    addRow () {
-      this.$refs.d2Crud.showDialog({
-        mode: 'add'
-      })
-    },
-    handleMod(row, index, tabKey) {
-      this.$set(this.dataSource[tabKey], index, row);
-    },
-    handleRowAdd (row, done) {
-      this.formOptions.saveLoading = true
-      setTimeout(() => {
-        console.log(row)
-        this.$message({
-          message: '保存成功',
-          type: 'success'
+      //取消选择
+      /*toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },*/
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      //单行根据id(age)删除数据
+      del(id){
+         this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          console.log('删除了')
+          // this.$http.delete(``) p265
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
         });
+      },
+      //多行删除
+      delArray() {
+        if(this.multipleSelection.length){
+          this.$confirm('此操作将此'+this.multipleSelection.length+'条记录永久删除, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            //删除记录
+            var _this = this;
+            const length = this.multipleSelection.length;
 
-        // done可以传入一个对象来修改提交的某个字段
-        done({
-          address: '我是通过done事件传入的数据！'
+            for (let i = 0; i < length; i++) {
+                console.log(this.multipleSelection[i])   //获取到的记录
+                // this.delarr.push(this.multipleSelection[i].id);
+                // console.log(this.delarr[i])
+            }
+            /*_this.$http({
+                method: 'GET',
+                url:    ?ids=' + this.delarr,
+            }).then(function(res) {
+                if (res.data.code == 0) {
+                    alert('成功！');
+                    _this.getTechSort();
+                } else {
+                    alert('数据加载失败！');
+                }
+            })*/
+
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });          
+          });
+      }else{
+        this.$message({
+            type: 'error',
+            message: '暂无选中的数据'
+          });  
+        return
+      }
+      },
+      //修改记录   p264
+      edit(row){
+        
+        //修改弹框获取该条记录的数据
+        this.editForm.editid = row.age
+        this.editForm.editname = row.name
+        this.editDialogVisible=true    //显示隐藏修改对话框
+      },
+      //修改确认
+      editParams(editForm){
+        this.$refs.editForm.validate((valid) => {
+            if(valid){
+            // console.log("确定修改"+this.editForm.editid)
+              this.editDialogVisible=false 
+            // 调用修改接口修改数据
+              //重新渲染数据
+              
+            }else{
+                this.editDialogVisible = true
+                this.$message({
+                  type: 'warning',
+                  message: '请输入正确的配置信息'
+                }); 
+            }
         })
-        this.formOptions.saveLoading = false
-      }, 300)
+      },
+      //配置详情
+      detail(row){
+        // console.log(row.age)
+        this.configId = row.age
+        this.appName = row.name
+        this.configDialogVisible=true
+      },
     },
-    handleDialogCancel (done) {
-      this.$message({
-        message: '取消保存',
-        type: 'warning'
-      });
-      done()
-    },
-
-  },
-      computed: {
-  //按钮分页
-    indexs: function(){ //控制页数btn的个数
-      var left = 1;
-      var right = this.pageSize;
-      var ar = [];
-      if(this.pageSize>= 5){
-        if(this.cur > 3 && this.cur < this.pageSize-2){
-          left = this.cur - 2
-          right = this.cur + 2
-        }else{
-          if(this.cur<=3){
-            left = 1
-            right = 5
-          }else{
-            right = this.pageSize
-            left = this.pageSize -4
-          }
-        }
-      }
-      while (left <= right){
-        ar.push(left)
-        left ++
-      }
-      return ar
-    }
-  },
-
-}
-
+  }
 </script>
 <style scoped>
-  .add{
-    margin:2% 0 0 70% !important;
-    background-color: #add8ee !important;
-  }
-
-  .el-table tr:nth-child(){
-   background-color: rgba(128,128,128,.2);
- 
- }
-
-  .el-table {
-        margin: 10px 0 0 80px;
-  }
-  /*分页*/
-  .page-bar{
-    margin: 10px 20%;
-    align-items: center;
-  }
-  ul,li{
-    margin: 0px;
-    padding: 0px;
-  }
-  li{
-   list-style: none
-  }
-  .page-bar li:first-child>a {
-    margin-left: 0px
-  }
-  .page-bar a{
-    border: 1px solid #ddd;
-    text-decoration: none;
-    position: relative;
-    float: left;
-    padding: 6px 12px;
-    margin-left: -1px;
-    line-height: 1.42857143;
-    color: #5D6062;
-    cursor: pointer;
-    margin-right: 20px;
-  }
-  .page-bar a:hover{
-    background-color: #eee;
-  }
-  .page-bar a.banclick{
-    cursor:not-allowed;
-  }
-  .page-bar .active a{
-    color: #fff;
-    cursor: default;
-    background-color: lightblue;
-    border-color: #1880f0;
-  }
-  .page-bar i{
-    font-style:normal;
-    color: #d44950;
-    margin: 0px 4px;
-    font-size: 12px;
-  }
-  .search{
-    margin-left: 70%;
-  }
-  .search input,
-  .search button{
-    height: 30px
+   .main{
+    height: 1300px;
+    margin-top: 10px;
+  } 
+  .detai{
+    text-indent: 10px !important;
   }
 </style>

@@ -1,10 +1,10 @@
 <template>
     <div class="Login">
-      <h1>中间件管理平台</h1>
+      <h1 class="slogan">欢 迎 使 用 <br> 中 间 件 管 控 平 台</h1>
       <div class="login_box">
         <!-- 头像区域 -->
         <div class="header_box">
-          <img src="@/assets/logo.png" alt />
+          <img src="@/assets/logo.png"  />
         </div>
         <!-- 登入表单区域 -->
         <el-form
@@ -35,7 +35,7 @@
           </el-form-item>
           <!-- 按钮 -->
           <el-form-item class="btns">
-            <el-button type="primary" @click="loginJudge">登入</el-button>
+            <el-button type="primary" @click="loginJudge">登陆</el-button>
             <el-button type="info" @click="resetLoginForm">重置</el-button>
           </el-form-item>
         </el-form>
@@ -79,23 +79,42 @@
         this.$refs.loginFormRef.validate(valid => {
           if (!valid) return;
         });
+        this.$router.push({path:'/home'});
+
       }
     }
   };
   </script>
   
   <style scoped>
-  .Login {
-    width: 100%;
-    height: 100%;
-    background-image: url("https://img.alicdn.com/tfs/TB1zsNhXTtYBeNjy1XdXXXXyVXa-2252-1500.png");
-  }
-  h1 {
+
+.Login {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+}
+
+.Login::after {
+  content: "";
+  background-image: url("https://img.alicdn.com/tfs/TB1zsNhXTtYBeNjy1XdXXXXyVXa-2252-1500.png");
+  opacity: 0.7;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+  background-position: 0px -10px;
+  background-size: 1600px;
+}
+  .slogan {
     position: absolute;
+    text-align: center;
     top: 40%;
     left: 20%;
     transform: translateY(-50%);
-    font-size: 30px;
+    font-size: 38px;
   }
   .code {
     width: 50%;
@@ -108,8 +127,8 @@
     float: right;
   }
   .login_box {
-    width: 450px;
-    height: 300px;
+    width: 400px;
+    height: 370px;
     background-color: #fff;
     border-radius: 3px;
     position: absolute;
@@ -118,11 +137,11 @@
     transform: translate(-50%, -50%);
   }
   .header_box {
-    width: 130px;
-    height: 130px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     position: absolute;
-    top: -80px;
+    top: -50px;
     left: 50%;
     transform: translate(-50%, 0);
     padding: 10px;
@@ -134,17 +153,18 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: #eee;
+    background-color: #fff;
   }
   .btns {
     display: block;
     float: right;
+    padding-top: 20px;
   }
   .login_form {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0);
-    width: 70%;
+    width: 80%;
   }
   </style>
