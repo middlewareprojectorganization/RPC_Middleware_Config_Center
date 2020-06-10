@@ -1,194 +1,212 @@
-<template>
-  <div class="tab-table">
-    <basic-container>
-      <el-tabs v-model="tabKey" @tab-click="handleClick">
-        <el-tab-pane
-          v-for="tab in tabs"
-          :label="tab.tab"
-          :name="tab.key"
-          :key="tab.key" 
-          class="head">
+<!-- 配置管理页 -->
 
-          <el-table
-            :data="dataSource[tab.key]"
-            style="width: 100%">
-            <el-table-column
-              v-for="item, index in columns"
-              :label="item.title"
-              :prop="item.dataIndex"
-              :key="item.key"
-              :width="item.key !== 'action' ? (item.width || 150) : item.width">
-              <template slot-scope="scope">
-                <span v-if="item.key !== 'action'">{{scope.row[item.dataIndex]}}</span>
-                <edit-dialog :row="scope.row" :key.sync="item.key" :index="scope.$index" :tabKey="tabKey" @handleMod="handleMod"></edit-dialog>
-                <delete-balloon :key.sync="item.key" :index="scope.$index" :tabKey="tabKey" @handleRemove="handleRemove"></delete-balloon>
-              </template>
-            </el-table-column>
+<template>
+  <div class="main">
+    <el-card>
+      <el-tabs v-model="activeName" @tab-click="handleClick(activeName)">
+        <el-tab-pane label="消费者" name="first">
+          <el-table style="width: 100%" :data="consumerlist">
+            <el-table-column label="服务ID" prop="id" width="180"></el-table-column>
+            <el-table-column label="服务名称" prop="name" width="180"></el-table-column>
+            <el-table-column label="所属app" prop="name" width="180"></el-table-column>
+            <el-table-column label="所属机器" prop="name" width="180"></el-table-column>
+            <el-table-column label="导出/引入时间" prop="birthday"></el-table-column>
+            <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)">编辑</el-button>
+              <el-button size="mini" type="danger" @click="del(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
           </el-table>
         </el-tab-pane>
-      </el-tabs>
+        <el-tab-pane label="服务者" name="second">
+          <el-table style="width: 100%" :data="consumerlist">
+            <el-table-column label="服务ID" prop="id" width="180"></el-table-column>
+            <el-table-column label="服务名称" prop="name" width="180"></el-table-column>
+            <el-table-column label="所属app" prop="name" width="180"></el-table-column>
+            <el-table-column label="所属机器" prop="name" width="180"></el-table-column>
+            <el-table-column label="导出/引入时间" prop="birthday"></el-table-column>
+            <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button size="mini" type="primary" @click="edit(scope.row, scope.$index)">编辑</el-button>
+              <el-button size="mini" type="danger" @click="del(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
+          </el-table>
+        </el-tab-pane>
+    </el-tabs>
 
-      <ul class="page-bar" >
-        <li v-if="cur>1"><a v-on:click="cur--,firstpage()">首页</a></li>
-        <li v-if="cur>1"><a v-on:click="cur--,pageClick()">上一页</a></li>
-    
-        <li v-if="cur==1"><a class="banclick">首页</a></li>
-        <li v-if="cur==1"><a class="banclick">上一页</a></li>
-        <li v-for="index in indexs" v-bind:class="{ 'active': cur == index}">
-          <a v-on:click="btnClick(index)">{{ index }}</a>
-        </li>
-        <li v-if="cur!=pageSize"><a v-on:click="cur++,pageClick()">下一页</a></li>
-        <li v-if="cur!=pageSize"><a v-on:click="cur++,lastpage()">尾页</a></li>
-        <li><a>共<i>{{pageSize}}</i>页</a></li>
-      </ul>
-    </basic-container>
-  </div>
+    <el-pagination @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-size="queryInfo.pagesize" layout="total, prev, pager, next, jumper" :total="total">
+    </el-pagination>
+  </el-card>
+  
+<!-- 修改记录对话框 -->
+  <el-dialog
+  title="编辑"
+  :visible.sync="editDialogVisible"
+  width="30%">
+  
+  <el-form :model="editForm" :rules="editFormRules" ref="editForm" label-width="100px">
+    <el-form-item label="所属app" prop="editapp">
+      <el-input v-model="editForm.editapp"></el-input>
+    </el-form-item>
+    <el-form-item label="所属机器" prop="editmachine">
+      <el-input v-model="editForm.editmachine"></el-input>
+    </el-form-item>
+  </el-form>
+  
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="editDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="editParams('editForm')">确 定</el-button>
+  </span>
+  </el-dialog>
+</div>
 </template>
 
 <script>
-import BasicContainer from '@vue-materials/basic-container';
-import DeleteBalloon from './components/DeleteBalloon';
-import EditDialog from './components/EditDialog';
-import response from './tab-table.json';
+  import Mock from 'mockjs'
+require('../../../../mock/index.js')
+import axios from 'axios'; 
+import { isInteger } from '../../validator.js';
 
-export default {
-  components: {
-    BasicContainer,
-    DeleteBalloon,
-    EditDialog,
-  },
-  name: 'TabTable',
 
-  data() {
-    return {
-      users: [],
-      len: 1,
-      pageSize:1, //总长度
-      cur: 1,  //当前页码
-      arr:[],
-      changeCss:null,
-      tabKey: 'all',
-      dataSource: [],
-      tabs: [
-        { tab: '消费者', key: 'all' },
-        { tab: '服务者', key: 'inreview' },
-        // { tab: '服务者', key: 'released' },
-        // { tab: '已拒绝', key: 'rejected' },
-      ],
-      columns: [
-        {
-          title: '标题',
-          dataIndex: 'title',
-          key: 'title',
+  export default {
+    data() {
+      return {
+        multipleSelection: [],
+        queryInfo:{
+          query:'',    //要搜索的关键字
+          pagenum:1,    //页码
+          pagesize:20,   //一页的数量
         },
-        {
-          title: '作者',
-          dataIndex: 'author',
-          key: 'author',
+        consumerlist:[],  
+        total:0,  //总页数
+        editDialogVisible: false,    //显示隐藏修改对话框
+        configDialogVisible: false,
+        editForm:{        //修改表单的数据对象
+          editapp: '',
+          editmachine:''
         },
-        {
-          title: '状态',
-          dataIndex: 'status',
-          key: 'status',
+        editFormRules:{    //修改表单的验证规则
+          editapp: [
+            // { required: true, message: "请输入正确的app名", trigger: "blur" },
+            // { validator: isInteger, trigger: "blur" }
+          ],
+          editmachine: [
+            // { required: true, message: "请输入应用名称", trigger: "blur" },
+            // { min: 2, max: 15, message: "长度在 2 到 15 个字符", trigger: "blur" }
+          ],
         },
-        {
-          title: '发布时间',
-          dataIndex: 'date',
-          key: 'date',
-        },
-        {
-          title: '操作',
-          key: 'action',
-        },
-      ],
-      visible: false,
-    };
-      
- 
-  },
-
-  created() {},
-
-
-
-  mounted() {
-    this.dataSource = response.data;
-  },
-
-  methods: {
-    handleClick(tab) {
-      console.log(tab);
-    },
-    handleRemove(index, tabKey) {
-      this.dataSource[tabKey].splice(index, 1);
-    },
-    handleMod(row, index, tabKey) {
-      this.$set(this.dataSource[tabKey], index, row);
-    },
-
-      //分页数据
-    dataListFn:function(page){
-      page--;
-      this.arr = this.users.slice(10*page,10*page+10);
-      console.log("arr.length:"+this.arr.length)
-    },
-     //分页
-    btnClick: function(data){//页码点击事件
-      if(data != this.cur){
-        this.cur = data
+        local:'',     //编辑位置
+        activeName: 'first',  //默认显示的表
       }
-      //根据点击页数请求数据
-      this.dataListFn(this.cur.toString());
     },
-    pageClick: function(){
-      //根据点击上下页请求数据
-      this.dataListFn(this.cur.toString());
+    created(){
+      this.getUsersList();
     },
-    firstpage(){
-      this.cur = 1;
-      this.dataListFn(this.cur.toString());
-    },
-    lastpage(){
-      this.cur = this.pageSize;
-      this.dataListFn(this.cur.toString());
-    },
-  },
-    computed: {
-  //按钮分页
-    indexs: function(){ //控制页数btn的个数
-      var left = 1;
-      var right = this.pageSize;
-      var ar = [];
-      if(this.pageSize>= 5){
-        if(this.cur > 3 && this.cur < this.pageSize-2){
-          left = this.cur - 2
-          right = this.cur + 2
-        }else{
-          if(this.cur<=3){
-            left = 1
-            right = 5
-          }else{
-            right = this.pageSize
-            left = this.pageSize -4
-          }
-        }
-      }
-      while (left <= right){
-        ar.push(left)
-        left ++
-      }
-      return ar
-    }
-  },
-}
+    methods: {
+      async getUsersList(type){
+        //要判断是在哪个tab   if-else请求数据
+        if(this.activeName == 'first'){
+          if(type) this.queryInfo.pagenum=1
+        const data=Object.assign({},this.queryInfo)
+        axios.get('/api/users',{data}).then(res=>{
+          console.log(res.data.status);
+          this.consumerlist = res.data.data.user;
+          this.total = res.data.data.total;
+          console.log(this.consumerlist)
+          console.log('first')
+        })
+      }else{
+        if(type) this.queryInfo.pagenum=1
+        const data=Object.assign({},this.queryInfo)
+        axios.get('/api/users',{data}).then(res=>{
+          console.log(res.data.status);
+          this.consumerlist = res.data.data.user;
+          this.total = res.data.data.total;
+          console.log(this.consumerlist)
+          console.log('second')
 
-</script>
-
-<style>
-  .tab-table {
-    margin:0px 0 0 50px !important;
+        })
+      }
+        
+      },
+       //监听页码值改变
+    handleCurrentChange(newPage){
+      console.log(newPage); 
+      this.queryInfo.pagenum = newPage;
+      this.getUsersList();
+    },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      // 切换表
+      handleClick(tab) {
+        // console.log(tab);
+        this.getUsersList()
+      },
+      //根据id删除数据
+      del(id){
+         this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          console.log('删除了')
+          // this.$http.delete(``) p265
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      },
+      //修改记录   p264
+      edit(row, index){
+        //修改弹框获取该条记录的数据
+        this.editForm.editapp = row.name
+        this.editForm.editmachine = row.name
+        this.local = index   //获取到正在编辑的位置
+        this.editDialogVisible=true    //显示隐藏修改对话框
+      },
+      //修改确认
+      editParams(editForm){
+        this.$refs.editForm.validate((valid) => {
+            if(valid){
+            // console.log("确定修改"+this.editForm.editapp)
+              console.log(this.consumerlist[this.local].birthday)
+              this.editDialogVisible=false 
+            // 调用修改接口修改数据
+              //重新渲染数据
+              
+            }else{
+                this.editDialogVisible = true
+                this.$message({
+                  type: 'warning',
+                  message: '修改失败'
+                }); 
+            }
+        })
+      },
+    },
   }
+</script>
+<style scoped>
+  /*  .main{
+   height: 1300px;
+   margin-top: 10px;
+    } 
+    .detai{
+   text-indent: 10px !important;
+    }
+    .configDetail{
+   height: 300px !important;
+    } */
+    .main{
+      margin-top: 10px
+    }
 </style>
-
-
-

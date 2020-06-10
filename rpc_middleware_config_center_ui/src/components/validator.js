@@ -5,6 +5,16 @@ export function isWscnEmail(str) {
   return reg.test(str.trim());
 }
  
+/* 是否是ip*/
+export function isIP(str) {
+  var reg = /^((25[0-5]|2[0-4]\d|[01]?\d\d?)($|(?!\.$)\.)){4}$/
+
+  // const reg = /^[a-z0-9](?:[-_.+]?[a-z0-9]+)*@wallstreetcn\.com$/i;
+  return reg.test(str.trim());
+}
+
+
+
 /* 合法url*/
 export function validateURL(textval) {
   const urlregex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
@@ -59,12 +69,17 @@ export function isPort(rule, value, callback) {
     if (value == '' || typeof(value) == undefined) {
       callback(new Error('请输入端口值'));
     } else {
-      const re = /^([0-9]|[1-9]\d|[1-9]\d{2}|[1-9]\d{3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/;
+      /*const re = /^([0-9]|[1-9]\d|[1-9]\d{2}|[1-9]\d{3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/;
       const rsCheck = re.test(value);
       if (!rsCheck) {
         callback(new Error('请输入在[0-65535]之间的端口值'));
       } else {
         callback();
+      }*/
+      if(value >= 0 && value <= 65535){
+        callback();
+      } else {
+        callback(new Error('请输入在[0-65535]之间的端口值'));
       }
     }
   }, 1000);
