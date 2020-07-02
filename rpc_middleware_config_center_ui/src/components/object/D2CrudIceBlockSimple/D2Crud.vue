@@ -1,6 +1,7 @@
+<!-- 配置管理页 -->
+
 <template>
   <div class="main">
-
     <el-card>
         <el-row :gutter="20">
           <el-col :span="7">
@@ -79,12 +80,14 @@
   <el-dialog
   title="配置详情"
   :visible.sync="configDialogVisible"
-  width="30%">
-
-  <h3>配置ID</h3>
-  <p class="detai">{{ configId }}</p><br>
-  <h3>应用名称</h3>
-  <p class="detai">{{ appName }}</p>
+  width="40%"
+  >
+  <div class="configDetail">
+    <h3>配置ID</h3><br>
+    <p class="detai">{{ configId }}</p><br><br>
+    <h3>应用名称</h3><br>
+    <p class="detai">{{ appName }}</p>
+  </div>
 </el-dialog>
 </div>
 </template>
@@ -147,16 +150,6 @@ import { isInteger } from '../../validator.js';
       this.queryInfo.pagenum = newPage;
       this.getUsersList();
     },
-      //取消选择
-      /*toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
-      },*/
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -270,5 +263,8 @@ import { isInteger } from '../../validator.js';
   } 
   .detai{
     text-indent: 10px !important;
+  }
+  .configDetail{
+    height: 300px !important;
   }
 </style>

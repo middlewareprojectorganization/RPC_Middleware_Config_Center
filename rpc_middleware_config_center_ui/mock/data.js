@@ -1,7 +1,7 @@
 //引入mockjs
 import Mock from 'mockjs'
 //使用mockjs模拟数据
-export default Mock.mock('/api/users', options => {
+export default Mock.mock('/api/data', options => {
   let info=JSON.parse(options.body)
   let total=50
   let pagenum=info.pagenum
@@ -13,12 +13,8 @@ export default Mock.mock('/api/users', options => {
   data[pageSize]=[{
         'name': '@cname',
         'id|+1': 1000,
-        'age|0000-65535': 0,    //0用来确定类型
-        'birthday': '@date("yyyy-MM-dd")',    //年月日
-        'city': '@city(true)',    //中国城市
-        // 'state':true,
-        'ip':'@ip',
-        'isMale|1': true
+        'data': '@date("yyyy-MM-dd")',    //年月日
+        
       }]
       data.pagenum=pagenum
       data.total=total
