@@ -9,7 +9,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class RpcMiddlewareConfigCenterPlatApplication {
 
     public static void main(String[] args) {
+        System.out.println("Application is start......");
         SpringApplication.run(RpcMiddlewareConfigCenterPlatApplication.class, args);
+        System.out.println("Application is end......");
     }
 
 }

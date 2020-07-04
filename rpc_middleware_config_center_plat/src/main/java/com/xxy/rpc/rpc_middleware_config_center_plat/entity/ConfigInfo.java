@@ -1,13 +1,14 @@
 package com.xxy.rpc.rpc_middleware_config_center_plat.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -22,7 +23,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ConfigInfo extends Model<ConfigInfo> {
 
-    private static final long serialVersionUID = 1L;
 
     /**
      * 主键
@@ -36,6 +36,11 @@ public class ConfigInfo extends Model<ConfigInfo> {
     private String configId;
 
     /**
+     * 默认配置标识
+     */
+    private Integer configDefault;
+
+    /**
      * 配置内容
      */
     private String configContent;
@@ -45,9 +50,9 @@ public class ConfigInfo extends Model<ConfigInfo> {
      */
     private String configName;
 
-    private LocalDateTime gmtCreate;
+    private Date gmtCreate;
 
-    private LocalDateTime gmtModified;
+    private Date gmtModified;
 
 
     @Override

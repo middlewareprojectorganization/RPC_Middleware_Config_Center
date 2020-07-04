@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `config_info`;
 CREATE TABLE `config_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `config_id` char(50) DEFAULT NULL COMMENT '配置id',

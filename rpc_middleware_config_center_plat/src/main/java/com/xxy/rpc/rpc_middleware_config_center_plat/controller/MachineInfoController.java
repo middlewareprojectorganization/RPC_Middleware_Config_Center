@@ -1,7 +1,6 @@
 package com.xxy.rpc.rpc_middleware_config_center_plat.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xxy.rpc.rpc_middleware_config_center_plat.dto.MachineInfoDTO;
@@ -10,13 +9,9 @@ import com.xxy.rpc.rpc_middleware_config_center_plat.request.MachinePageRequest;
 import com.xxy.rpc.rpc_middleware_config_center_plat.service.MachineInfoService;
 import com.xxy.rpc.rpc_middleware_config_center_plat.util.R;
 import io.swagger.annotations.*;
-import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * <p>
