@@ -62,6 +62,7 @@ public class ConfigInfoController {
         return R.ok();
     }
 
+
     @DeleteMapping("/removeConfig/{id}")
     @ApiOperation("删除配置")
     @ApiImplicitParam(name = "id", value = "配置id", required = true)
