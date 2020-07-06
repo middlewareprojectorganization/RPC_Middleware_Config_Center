@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -19,7 +21,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class DegradeRule extends Model<DegradeRule> {
+public class DegradeRule {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,14 +44,9 @@ public class DegradeRule extends Model<DegradeRule> {
     private Integer grade;
 
     @TableField("gmt_Create")
-    private LocalDate gmtCreate;
+    private Date gmtCreate;
 
-    private LocalDate gmtModified;
+    private Date gmtModified;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }

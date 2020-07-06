@@ -40,6 +40,7 @@ public class ConfigInfoController {
      * 拉取默认配置
      * @return
      */
+    @ApiOperation("获取默认配置")
     @GetMapping("/default/get")
     public R<ConfigInfo> getConfig(){
         QueryWrapper<ConfigInfo> queryWrapper = new QueryWrapper<>();
