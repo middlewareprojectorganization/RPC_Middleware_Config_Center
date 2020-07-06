@@ -12,10 +12,7 @@ import com.xxy.rpc.rpc_middleware_config_center_plat.request.UpdateAppRequest;
 import com.xxy.rpc.rpc_middleware_config_center_plat.service.AppInfoService;
 import com.xxy.rpc.rpc_middleware_config_center_plat.util.MyBeanUtils;
 import com.xxy.rpc.rpc_middleware_config_center_plat.util.R;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +30,7 @@ import java.util.UUID;
  * @since 2020-05-29
  */
 @RestController
+@Api(tags = "应用管理")
 @RequestMapping("/app-info")
 public class AppInfoController {
 
