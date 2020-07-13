@@ -77,7 +77,6 @@ public class ConfigInfoController {
 
     @PostMapping("/pageConfig")
     @ApiOperation("分页查询配置")
-    @ApiImplicitParam(name = "id", value = "配置id", required = true)
     @ApiResponses({
             @ApiResponse(code = 200,message = "成功！", response = R.class ),
             @ApiResponse(code = 500,message = "失败", response = R.class),

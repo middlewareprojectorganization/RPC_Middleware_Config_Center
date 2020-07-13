@@ -8,13 +8,13 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @ApiModel("增加应用")
-public class AddAppRequest {
+public class  AddAppRequest {
 
 
     /**
      * app名称
      */
-    @NotNull(message = "app名称不能为空")
+    @NotNull
     @ApiModelProperty(value = "应用名称", required = true)
     private String appName;
 

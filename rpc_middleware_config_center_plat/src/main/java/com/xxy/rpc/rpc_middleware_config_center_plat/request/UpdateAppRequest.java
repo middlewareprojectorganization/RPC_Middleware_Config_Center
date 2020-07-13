@@ -7,15 +7,16 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-@ApiModel("增加应用")
+@ApiModel("修改应用")
 public class UpdateAppRequest {
 
 
     /**
      * 主键id
      */
-    @ApiModelProperty(value = "主键id")
-    private String id;
+    @NotNull
+    @ApiModelProperty(value = "主键id", required = true)
+    private Integer id;
 
 
     /**

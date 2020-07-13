@@ -4,9 +4,7 @@ package com.xxy.rpc.rpc_middleware_config_center_plat.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xxy.rpc.rpc_middleware_config_center_plat.entity.AppInfo;
-import com.xxy.rpc.rpc_middleware_config_center_plat.entity.ConfigInfo;
 import com.xxy.rpc.rpc_middleware_config_center_plat.request.AddAppRequest;
-import com.xxy.rpc.rpc_middleware_config_center_plat.request.AddConfigRequest;
 import com.xxy.rpc.rpc_middleware_config_center_plat.request.BasePageRequest;
 import com.xxy.rpc.rpc_middleware_config_center_plat.request.UpdateAppRequest;
 import com.xxy.rpc.rpc_middleware_config_center_plat.service.AppInfoService;
@@ -56,8 +54,9 @@ public class AppInfoController {
             @ApiResponse(code = 200,message = "成功！", response = R.class ),
             @ApiResponse(code = 500,message = "失败", response = R.class),
     })
-    public R registerService(@RequestBody UpdateAppRequest request) {
+    public R registerService(@RequestBody @Valid UpdateAppRequest request) {
         AppInfo appInfo = MyBeanUtils.copyPropertiesChaining(request, AppInfo::new);
+        appInfo.setId(request.getId());
         appInfoService.updateById(appInfo);
         return R.ok();
     }
