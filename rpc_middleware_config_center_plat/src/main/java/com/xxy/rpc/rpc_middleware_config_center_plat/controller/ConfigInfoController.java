@@ -20,13 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/config/info")
 public class ConfigInfoController {
-    /**
-     * 拉取默认配置
-     * @return
-     */
-    @GetMapping("/default/get")
-    public ConfigInfoDTO getConfig(){
-        return new ConfigInfoDTO();
+    public void addConfig(ConfigInfoDTO configInfoDTO){
+
     }
 
 

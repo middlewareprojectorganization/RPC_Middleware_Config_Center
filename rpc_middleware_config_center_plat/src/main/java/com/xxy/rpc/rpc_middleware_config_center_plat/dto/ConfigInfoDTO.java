@@ -38,5 +38,8 @@ public class ConfigInfoDTO {
     @ApiModelProperty("修改时间")
     private LocalDateTime gmtModified;
 
+    @ApiModelProperty("配置类型：全局配置，单个配置")
+    private String configType;
+
 
 }
