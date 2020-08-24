@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,7 +22,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class MachineInfo extends Model<MachineInfo> {
+public class MachineInfo {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,14 +59,9 @@ public class MachineInfo extends Model<MachineInfo> {
      */
     private String appId;
 
-    private LocalDateTime gmtCreate;
+    private Date gmtCreate;
 
-    private LocalDateTime gmtModified;
+    private Date gmtModified;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }

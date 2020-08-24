@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class LogInfo extends Model<LogInfo> {
+public class LogInfo {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,10 +29,5 @@ public class LogInfo extends Model<LogInfo> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }

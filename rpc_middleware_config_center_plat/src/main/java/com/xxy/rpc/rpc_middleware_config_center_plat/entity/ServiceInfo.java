@@ -3,6 +3,8 @@ package com.xxy.rpc.rpc_middleware_config_center_plat.entity;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,7 +20,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ServiceInfo extends Model<ServiceInfo> {
+public class ServiceInfo {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,14 +39,8 @@ public class ServiceInfo extends Model<ServiceInfo> {
 
     private String serviceName;
 
-    private LocalDateTime gmtCreate;
+    private Date gmtCreate;
 
-    private LocalDateTime gmtModified;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
+    private Date gmtModified;
 
 }

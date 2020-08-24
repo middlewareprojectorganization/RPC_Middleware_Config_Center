@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class FlowRule extends Model<FlowRule> {
+public class FlowRule {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,10 +28,5 @@ public class FlowRule extends Model<FlowRule> {
      */
     private String flowId;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }
